@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+        <link rel="stylesheet" href="/freerollio/css/styles.css"> <!-- Compiled from scss partials -->
+        <script src="/freerollio/scripts/jquery-3.3.1.min.js"></script> <!-- Needed for jQuery -->
+        <script src="/freerollio/scripts/web3.min.js"></script> <!-- Web3 library -->
+        <script src="/freerollio/js/web3_starter.js"></script> <!-- Runs checks for metamask, holds ABIs -->
+        <script src="/freerollio/js/main.js"></script> <!-- All functions are here -->
+        <title>freeroll | App</title>
+    </head>
+
+    <body>
+
+        <div class="mobile-overlay"></div>
+        <div class="mobile-message">
+            <p>
+                Freeroll.io is not supported mobile.
+            </p>
+            <br />
+            Sorry :(
+        </div>
+
+        <div class="overlay"></div>
+        <div class="error-bar">
+
+            <span class="error-label no-metamask-plugin">
+                <a href="https://metamask.io" target="_blank"><image src="/freerollio/images/metamask-dark.png" style="max-width:100%"></a>
+                <br />
+                <br />
+                Please <a href="https://metamask.io" target="_blank">install the MetaMask plugin</a> to allow freeroll.io to access the blockchain.
+            </span>
+            <span class="error-label no-metamask-accounts">No accounts found. Please make sure MetaMask is unlocked then refresh the page.</span>
+            <span class="error-label invalid-network">Invalid network. Please switch MetaMask to the Main Ethereum Network.</span>
+        </div>
+
+
+
+        <!-- Divs to wrap content for sticky footer format -->
+        <div class="content">
+
+
+
+
+                <!-- Header -->
+                <header>
+                    <span class="title">freeroll</span>
+                    <span class="sub-title">(beta)</span>
+
+                </header>
+
+                <!-- Create a Freeroll --------------------------------------------------------------------------------------------------------------------------------->
+                <div class="post-container float-left">
+
+                    <div class="post-content-container">
+
+                        <div class="post-title-container">Create a Freeroll</div>
+
+                        <div class="post-body-container">
+
+                            <!-- Description (input string) -->
+                            <div id="description-container" class="user-input">
+                                <div class="post-info-title-container">Description:</div>
+                                <div class="post-input-row">
+                                    <input type="text" id="user-description"
+                                        placeholder="Description of my goal..."
+                                        data-lpignore="true"/>
+                                    <span class="tooltiptext-container">
+                                        <img src="/freerollio/images/grey_questionmark_24px.png" />
+                                        <div class="tooltiptext">Make the description of your goal clear, measurable, and objective.<br/>This helps avoid confusion and controversy.<br />Keep it under 140 characters.</div>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <!-- Receiver (dropdown) -->
+                            <div id="receiver-container" class="user-input">
+                                <div class="post-info-title-container">Receiver:</div>
+                                <div class="post-input-row">
+                                    <select class="post-select" id="user-receiver">
+                                        <option value="" style="color:grey">Select a receiver</option>
+                                        <option value="0" style="color:black">GiveDirectly</option>
+                                        <option value="1" style="color:black">Heifer International</option>
+                                        <option value="2" style="color:black">freerollio creator</option>
+                                        <option value="3" style="color:black">Friend / Other</option>
+                                    </select>
+                                    <span class="tooltiptext-container">
+                                        <img src="/freerollio/images/grey_questionmark_24px.png" />
+                                        <div class="tooltiptext">Select a charity or enter a friends ethereum address.<br /> This is where the funds will be directed if you fail to complete your goal.</div>
+                                    </span>
+                                    <div class="post-info-input-container" style="margin-right:18px">
+                                        <input type="text" id="user-input-receiver"
+                                            placeholder="Ethereum address of receiver"
+                                            data-lpignore="true"/>
+                                    </div>
+                                </div>
+                                <script>
+                                $("#user-receiver").change(function() {
+                                    $("#user-receiver").css("color", "black");
+
+                                    var val = $(this).val();
+                                    if(val == '3') {
+                                        $("#user-input-receiver").slideToggle("slow");
+                                    } else {
+                                        $("#user-input-receiver").hide();
+                                    }
+                                });
+                                </script>
+                            </div>
+
+
+                            <!-- Amount (input string) -->
+                            <div id="amount-container" class="user-input">
+                                <div class="post-info-title-container">Amount:</div>
+                                <div class="post-input-row">
+                                    <input type="text" id="user-amount-eth"
+                                        placeholder="Wager amount in ETH"
+                                        data-lpignore="true"/>
+                                    <span class="tooltiptext-container">
+                                        <img src="/freerollio/images/grey_questionmark_24px.png" />
+                                        <div class="tooltiptext"><a href="https://ethereumprice.org/" target="_blank" style="text-decoration:underline">Click here</a> to see the current exchange rate of ethereum.</div>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <!-- Duration (input number) -->
+                            <div id="duration-container" class="user-input">
+                                <div class="post-info-title-container">Duration:</div>
+                                <div class="post-input-row">
+                                    <input type="text" id="user-duration"
+                                        placeholder="Number of days to complete your goal"
+                                        data-lpignore="true"/>
+                                    <span class="tooltiptext-container">
+                                        <img src="/freerollio/images/grey_questionmark_24px.png" />
+                                        <div class="tooltiptext">Enter the number of days to report completing your goal.<br />Example: If you want 36 hours, enter 1.5<br />Remember you <b>cannot retreive your funds</b> after this period has elapsed.</div>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <!-- Result Location (input string) -->
+                            <div id="results-container" class="user-input">
+                                <div class="post-info-title-container">Results Location:</div>
+                                <div class="post-input-row">
+                                    <input type="text" id="user-location"
+                                        placeholder="www.exactUrlOfResults.com (optional)"
+                                        data-lpignore="true"/>
+                                    <span class="tooltiptext-container">
+                                        <img src="/freerollio/images/grey_questionmark_24px.png" />
+                                        <div class="tooltiptext">Where on the web are you going to publish and verify that you achieved your goal.<br />This field is optional.</div>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <!-- Category (dropdown) -->
+                            <div id="receiver-container" class="user-input">
+                                <div class="post-info-title-container">Category:</div>
+                                <div class="post-input-row">
+                                    <select class="post-select" id="user-category">
+                                        <option value="" style="color:grey">Select a category</option>
+                                        <option value="0" style="color:black">Health</option>
+                                        <option value="1" style="color:black">New skill</option>
+                                        <option value="2" style="color:black">Work / School</option>
+                                        <option value="3" style="color:black">Other</option>
+                                    </select>
+                                    <span class="tooltiptext-container">
+                                        <img src="/freerollio/images/grey_questionmark_24px.png" />
+                                        <div class="tooltiptext">Chose a category to help those browsing freerollio.</div>
+                                    </span>
+                                </div>
+                                <script>
+                                $("#user-category").change(function() {
+                                    $("#user-category").css("color", "black");
+                                });
+                                </script>
+                            </div>
+
+                            <!-- Review Button -->
+                            <button id="review-button" onclick="fireUponReviewClick()">Review</button>
+
+                        </div> <!-- End post-body-container -->
+                    </div> <!-- End post-content-container -->
+                </div> <!-- End post-container -->
+
+
+
+                <!-- Search  -------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="search-container float-right">
+
+                    <div id="search-container">
+
+                        <!-- Search Title -->
+                        <div class="search-title-container">
+                            <div class="title-container">Community's Freerolls</div>
+                            <a class="filter-link">Show Filter</a>
+                        </div>
+
+                        <!-- Filter Dropdown -->
+                        <div class="dropdown-content-container" id="filter-container">
+
+                            <div class="filter-row">
+                                <span class="filter-category">Status:</span>
+                                <span id="filter-active" class="filter-button">Active</span>
+                                <span id="filter-expired" class="filter-button">Expired</span>
+                            </div>
+
+                            <div class="filter-row">
+                                <span class="filter-category">Poster:</span>
+                                <span id="filter-community" class="filter-button">Community</span>
+                                <span id="filter-you" class="filter-button">You</span>
+                            </div>
+
+                            <div class="filter-row">
+                                <span class="filter-category">Value:</span>
+                                <span id="filter-low" class="filter-button">Low</span>
+                                <span id="filter-high" class="filter-button">High</span>
+                            </div>
+
+                            <div class="filter-row">
+                                <span class="filter-category">Receiver:</span>
+                                <span id="filter-charity" class="filter-button">Charity</span>
+                                <span id="filter-noncharity" class="filter-button">Other</span>
+                            </div>
+
+                            <div class="filter-row">
+                                <span class="filter-category">Category:</span>
+                                <span id="filter-health" class="filter-button">Health</span>
+                                <span id="filter-newskill" class="filter-button">New Skill</span>
+                            </div>
+
+                            <div class="filter-row">
+                                <span class="filter-category"></span>
+                                <span id="filter-workschool" class="filter-button">Work / School</span>
+                                <span id="filter-othercat" class="filter-button">Other</span>
+                            </div>
+
+                            <!-- Filter Button Functionality -->
+                            <script type="text/javascript">
+                                $(".filter-button").click(function() { // Any button
+
+                                    if ($(this).attr("class") == "filter-button unselected") { // If is not selected
+                                        $(this).removeClass("unselected");
+                                    } else {
+                                        $(this).addClass("unselected"); // Add selected class
+                                    }
+                                    fireUponFilterChange();
+                                });
+                            </script>
+
+                            <!-- Show / Hide Filter -->
+                            <script type="text/javascript">
+                                $(".filter-link").click(function() {
+                                    $("#filter-container").slideToggle("slow");
+
+                                    if ($(".filter-link").text() == 'Show Filter') {
+                                        $(".filter-link").text("Close Filter");
+                                    } else {
+                                        $(".filter-link").text("Show Filter");
+                                    }
+                                });
+                            </script>
+
+                        </div> <!-- End Filter -->
+
+                        <!-- Search Results and Messages  --------------------->
+                        <div class="log-results-container">
+
+                            <div id="query-results"></div>
+
+                            <div id="no-results-category" class="search-complete"> <!-- Hidden by default -->
+                                <p>No Matching Freerolls</p>
+                            </div>
+
+                            <div id="no-more-results-category" class="search-complete"> <!-- Hidden by default -->
+                                <p>Search complete</p>
+                            </div>
+
+                            <div id="install-meta-search" class="search-complete"> <!-- Hidden by default -->
+                                <p>Please <a href="https://metamask.io" target="_blank">install MetaMask</a> to search blockchain</p>
+                            </div>
+
+                            <div id="searching-blockchain"> <!-- Shown by default -->
+                                  <p>Scanning the Ethereum blockchain for freerolls...</p>
+                                  <div class="spinner"></div>
+                            </div>
+
+                            <div id="loadmore-button-container"> <!-- Hidden by default -->
+                                <a class="loadmore-link" onclick="loadmoreButton()">Load more</a>
+                            </div>
+                        </div> <!-- End log-results-container -->
+                    </div> <!-- End #search-container -->
+                </div> <!-- End .search-container -->
+                <div class="clear:both"></div>
+            </div> <!-- End Landing Container -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Modals ******************************************************************************************************************************************* -->
+        <!-- post-warning-modal -->
+        <!-- review-modal -->
+
+
+
+        <!-- Post Modal Information----------------------------------------------->
+        <div id="post-warning-modal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-form small-modal">
+
+                <div class="intro-title-container">
+                    <div class="sub-container">
+                        <span onClick="closeModal()" class="close intro-close">&times;</span>
+                        <h3>Warnings</h3>
+                    </div>
+                </div>
+
+                <div class="post-body-container">
+                    <ul style="text-align:left">
+                        <li>freeroll.io is not responsible for ANYTHING.</li>
+                        <li>Do not risk money you cannot aford to lose.</li>
+                        <li>Freerolls are uneditable after submitted.</li>
+                        <li>Review the details of your freeroll carefully and <a href="https://docs.google.com/document/d/1KjZpuII925CJhYzMB9E7Wq4OfjD8odqNgFK2Z09V-sM/edit#heading=h.v52xddk4vqhv" target="_blank">please contact us</a> with any questions BEFORE submitting your freeroll.</li>
+                    </ul>
+                    <div class="intro-border"></div>
+                    <p><button id="got-it-button" onclick="populateModal()">Got It</button></p>
+                </div>
+
+            </div> <!-- End small-modal -->
+        </div> <!-- End post-warning-modal -->
+
+
+        <!-- Review Modal --------------------------------------------------------->
+        <div id="review-modal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-form review-modal">
+
+                <div class="modal-title-container">
+                    <span onClick="closeReviewModal()" class="close">&times;</span>
+                    <h3>Review Your Freeroll</h3>
+                </div>
+
+                <div id="review-body" class="modal-body">
+
+                    <div id="review-body-data" class="modal-body-data">
+
+                        <div class="modal-item"><span><p>You, owner of ethereum account at address:&nbsp;</p><a id="review-poster"></a></span></div>
+
+                        <div class="modal-item"><span><p>Promise accomplish the following:&nbsp;</p><p id="review-description" class="vital-content"></p></span></div>
+
+                        <div class="modal-item"><span>
+                            <p>Within:&nbsp;</p>
+                            <p id="review-duration-days" class="vital-content"></p><p><b>&nbsp;Days </b></p>
+                            <p id="review-duration-hours" class="vital-content"></p><p><b>&nbsp;Hours </b></p>
+                            <p id="review-duration-minutes" class="vital-content"></p><p><b>&nbsp;Minutes </b></p>
+                            <p>of creation (starting upon promise's confirmation).</p>
+                        </span></div>
+
+                        <div class="modal-item"><span><p>Or the entire balance of:&nbsp;</p><p id="review-amount" class="vital-content"></p></span></div>
+
+                        <div class="modal-item"><span><p>Will transfer rights to the freeroll receiver you specified:&nbsp;</p><a id="review-receiver" class="vital-content"></a></span></div>
+
+                        <div class="modal-item" id="review-check-addr-mess" style="display:none"><span><p>Verify the above address <a id="review-check-addr-link" href="" target="">here</a></p></span></div>
+
+                        <div class="modal-item"><span>
+                            <p id="review-location-mess-no" style="display:none">You DO NOT intend to post proof of your results.</p>
+                            <p id="review-location-mess-yes" style="display:none">You agree to verifiy your results at:</p>
+                            <a id="review-location" class="vital-content"></a>
+                        </span></div>
+
+                        <div class="modal-item"><span><p>You agree to act in accordance to the system of:&nbsp;</p>
+                            <p id="review-trust" class="vital-content">Honor</p>
+                        </span></div>
+
+                        <div class="modal-body-border"></div>
+
+                        <div id="review-load-message" class="load-message">
+                            <p>Retreiving Blockchain Information...</p>
+                            <div class="spinner"></div>
+                        </div>
+
+                        <div id="submitting-load-message" class="load-message" style="display:none">
+                            <p>Submitting your Freeroll to the blockchain...</p>
+                            <div class="spinner"></div>
+                        </div>
+
+
+                        <div id="blockchain-review-information" style="display:none">
+
+                            <span class="modal-item">
+                                <p>Select a <a href="https://masterthecrypto.com/ethereum-what-is-gas-gas-limit-gas-price/" target="_blank">gas level</a> (standard recommended):</p>
+                                <select class="post-select" id="gas-price" onchange="populateEstimates(this)">
+                                    <option value="low" style="color:black">Low (<30min)</option>
+                                    <option value="standard" style="color:black" selected="selected">Standard (<5min)</option>
+                                    <option value="fast" style="color:black">High (<2min)</option>
+                                </select>
+                            </span>
+
+                            <div id="est-info-container">
+                                <div class="modal-item"><span>
+                                    <p>Estimated Freeroll Deadline:&nbsp;</p>
+                                    <p id="modal-est-deadline-date" class="vital-content"></p>
+                                    <p> at </p>
+                                    <p id="modal-est-deadline-time" class="vital-content"></p>
+                                </span></div>
+                                <div class="modal-item"><span><p>Estimated Deployment Cost:&nbsp;</p><p id="modal-deploy-cost" class="vital-content"></p></span></div>
+                                <div class="modal-item"><span><p>Estimated Claim Victory Cost:&nbsp;</p><p id="modal-claim-cost" class="vital-content"></p></span></div>
+                            </div>
+
+                            <div class="modal-body-border"></div>
+
+                            <div class="modal-button-container">
+                                <button id="cancel-post" class="valid-button" onClick="closeReviewModal()">Cancel</button>
+                                <button id="submit-post" class="valid-button" onclick="submitFreeroll()">Submit</button>
+                                <div class="clear-float-div"></div>
+                            </div>
+                        </div>
+
+                    </div> <!-- End review-body-data -->
+                </div> <!-- End review-body -->
+            </div> <!-- End .review-modal -->
+        </div> <!-- #review-modal -->
+
+
+
+
+<!-- STOPPED REVIEWINGI HERE  -->
+
+
+
+
+
+        <!-- Details Modal ------------------------------------------------------->
+       <div id="details-modal" class="modal">
+
+           <!-- Modal content -->
+           <div class="modal-form review-modal">
+
+               <!-- Modal Title -->
+               <div class="modal-title-container">
+                   <span onClick="closeDetailsModal()" class="close">&times;</span>
+                   <h3>Freeroll Contract</h3>
+                   <div class="details-address-container">
+                       <a id="details-sub-header" class="modal-sub-header-a" href=""></a>
+                   </div>
+               </div>
+
+               <div class="modal-body">
+                   <div id="details-load-message" class="load-message">
+                       <p>Searching Blockchain for Contract Details...</p>
+                       <div class="spinner"></div>
+                   </div>
+                   <div id="details-body-data" class="modal-body-data">
+                       <div class="modal-item"><span><p>Freeroll poster:&nbsp;</p><a id="modal-poster"></a></span></div>
+                        <div class="modal-item"><span><p>Stated on:&nbsp;</p><p id="modal-dateposted" class="vital-content"></p></span></div>
+                        <div class="modal-item"><span><p>That he must accomplish:&nbsp;</p><p id="modal-description" class="vital-content"></p></span></div>
+                        <div class="modal-item"><span>
+                            <p>Within:&nbsp;</p>
+                            <p id="modal-duration-days" class="vital-content"></p><b> Days </b></p>
+                            <p id="modal-duration-hours" class="vital-content"></p><b> Hours </b></p>
+                            <p id="modal-duration-minutes" class="vital-content"></p><b> Minutes</b></p>
+                        </span></div>
+                        <div class="modal-item"><span>
+                            <p>And by no later than:&nbsp;</p>
+                            <p id="modal-expiration-date" class="vital-content"></p>
+                            <p> at </p>
+                            <p id="modal-expiration-time" class="vital-content"></p>
+                        </span></div>
+                        <div class="modal-item"><span><p>Or forfeit the entire balance of:&nbsp;</p><p id="modal-value" class="vital-content"></p></span></div>
+                       <div class="modal-item"><span><p>To the freeroll receiver:&nbsp;</p><a id="modal-receiver" class="vital-content"></a></span></div>
+                       <div class="modal-item"><span>
+                           <p id="modal-location-avail-no" class="hidden">Freeroll poster has chosen not to publish his results.</p>
+                           <p id="modal-location-avail-yes" class="hidden">Freeroll poster has chosen to publish his results here: </p>
+                           <a id="modal-location" class="vital-content"></a></span></div>
+                        <div class="modal-item"><span><p>The poster has agreed to act in accordance to the system of:&nbsp;</p>
+                            <p id="modal-trust" class="vital-content">Honor</p>
+                        </span></div>
+                       <div class="modal-body-border"></div>
+                        <div class="modal-item"><span><p>Freeroll Deadline:&nbsp;</p>
+                            <p id="modal-deadline-expired" class="vital-content" style="display:none"> Expired</p>
+                            <p id="modal-deadline-active" class="vital-content" style="display:none"> Active</p>
+                        </span></div>
+                        <div class="modal-item"><span><p>Outcome:&nbsp;</p>
+                            <p id="modal-outcome-victory" class="vital-conten" style="display:none"> Victory Claimed</p>
+                            <p id="modal-outcome-unsuccessful" class="vital-content" style="display:none"> Unsuccessful</p>
+                            <p id="modal-outcome-tbd" class="vital-content" style="display:none"> TBD</p>
+                        </span></div>
+                        <div class="modal-item"><span><p>Unpaid Balance:&nbsp;</p><p id="modal-remaining-balance" class="vital-content"></p></span></div>
+
+                       <div class="modal-body-border"></div>
+
+                       <div class="modal-button-container">
+                           <button id="claim-victory" class="valid-button"onClick="claimVictory()">Claim Victory</button>
+                           <button id="claim-victory-grey" class="greyout-button">Claim Victory</button>
+                           <button id="payout" class="valid-button" onClick="payoutFreeroll()">Payout</button>
+                           <button id="payout-grey" class="greyout-button">Payout</button>
+                           <div class="clear-float-div"></div>
+                       </div>
+                   </div>
+
+               </div>
+           </div>
+       </div> <!-- End details modal -->
+
+       <div id="after-submit-modal" class="modal">
+
+           <div class="modal-form small-modal">
+
+               <div id="payout-success-cont" class="after-submit-container" style="display:none">
+                   <div class="intro-title-container">
+                       <div class="sub-container">
+                           <span onClick="closeAllModals()" class="close intro-close">&times;</span>
+                           <h3>Transaction Submitted</h3>
+                       </div>
+                   </div>
+
+                   <div class="post-body-container">
+                       <p>You can track it <a id="payoutHash" href="" target="_blank">here</a> or in your MetaMask extension.</p>
+                       <p>Thank you for using freeroll.io</p>
+                   </div>
+               </div>
+
+               <div id="payout-reject-cont" class="after-submit-container" style="display:none">
+                   <div class="intro-title-container">
+                       <div class="sub-container">
+                           <span onClick="closeAllModals()" class="close intro-close">&times;</span>
+                           <h3>Transaction Rejected</h3>
+                       </div>
+                   </div>
+
+                   <div class="post-body-container">
+                       <p>Please feel free to contact us if you can not figure out the issue.</p>
+                   </div>
+               </div>
+
+
+               <div id="success-freeroll-cont" class="after-submit-container" style="display:none">
+                   <div class="intro-title-container">
+                       <div class="sub-container">
+                           <span onClick="closeAllModals()" class="close intro-close">&times;</span>
+                           <h3>Freeroll Submitted</h3>
+                       </div>
+                   </div>
+
+                   <div class="post-body-container">
+
+                       <p>You can track the transaction <a id="txHash" href="" target="_blank">here</a> or in your MetaMask extension.</p>
+
+                       <p>Once your transaction is accepted you should see it appear with the other Community Freerolls and you can share or revisit it with this <a id="share-link" href="" target="_blank">link</a>.</p>
+
+                       <p>Good luck with your goal and be sure to claim victory before your deadline.</p>
+                   </div>
+
+               </div>
+
+
+               <div id="submit-rejected-cont" class="after-submit-container" style="display:none">
+                   <div class="intro-title-container">
+                       <div class="sub-container">
+                           <span onClick="closeAllModals()" class="close intro-close">&times;</span>
+                           <h3>Freeroll Rejected</h3>
+                       </div>
+                   </div>
+
+                   <div class="post-body-container">
+                       <p>Please feel free to contact us if you can not figure out the issue.</p>
+                   </div>
+               </div>
+
+           </div>
+       </div>
+
+
+
+       <footer>
+
+           <div class="thank-you-container">
+               <h1>Thank you for checking out freeroll.io</h1>
+
+               <div class="thank-you-links-container">
+                   <a href="https://freeroll.io" target="_blank">Introduction</a>
+               </div>
+
+               <div class="thank-you-links-container">
+                   <a href="https://docs.google.com/document/d/1KjZpuII925CJhYzMB9E7Wq4OfjD8odqNgFK2Z09V-sM/edit#heading=h.qazj64fm3owc" target="_blank">FAQs</a>
+               </div>
+
+               <div class="thank-you-links-container">
+                   <a href="https://docs.google.com/document/d/1KjZpuII925CJhYzMB9E7Wq4OfjD8odqNgFK2Z09V-sM/edit?usp=sharing" target="_blank">Read More</a>
+               </div>
+
+
+
+
+
+           </div>
+
+           <div class="footer-button-container">
+               <a href="https://discord.gg/nR5UQWw" target="_blank"><img class="footer-icon" src="/freerollio/images/discord_50.png" /></a>
+               <a href="https://docs.google.com/document/d/1KjZpuII925CJhYzMB9E7Wq4OfjD8odqNgFK2Z09V-sM/edit?usp=sharing" target="_blank"><img class="footer-icon" src="/freerollio/images/docs_50.png" /></a>
+               <a href="https://github.com/sted9000/freeroll.io" target="_blank"><img class="footer-icon" src="/freerollio/images/github_50.png" /></a>
+           </div>
+       </footer>
+    </body>
+</html>
+<!--
+
+            <div class="landing-left">
+
+                <div class="sub-title">
+                    ... ability to follow one's own advice.
+                </div>
+
+            </div>
+
+            <div class="landing-right">
+
+                <img class="title-image" src="images/handshake_640px.png" />
+
+            </div>
+
+        </div>
+
+        <div class="cf"></div> -->

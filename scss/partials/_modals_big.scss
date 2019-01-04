@@ -1,0 +1,132 @@
+// Review Modal *********************************************************************************************************
+
+// Review Modal (and detail-modal)
+.review-modal {
+    margin: 100px auto;
+    width: 440px;
+}
+
+.modal-title-container {
+   text-align: center;
+   border-bottom: 1px solid grey;
+   position: relative;
+   padding-bottom: 10px;
+
+   h3 {margin-bottom: 0;}
+
+   .modal-sub-header-a {
+       margin: 0 auto;
+       width: 70%;
+       white-space: nowrap;
+       overflow: hidden;
+       text-overflow: ellipsis;
+       font-size: .8em;
+       margin-bottom: 10px;
+       font-weight: bold;
+   }
+
+   #review-subtitle {
+       margin: 0 auto;
+       width: 70%;
+       white-space: nowrap;
+       overflow: hidden;
+       text-overflow: ellipsis;
+       font-size: .8em;
+       margin-bottom: 10px;
+       font-weight: bold;
+
+       &:hover {
+           text-decoration: none;
+       }
+   }
+}
+
+// Modal content
+.modal-body {
+   padding: 10px;
+   font-size: .8em;
+
+   .after-submit-container {
+       padding: 10px;
+
+       h3 {
+           margin: 0 auto;
+           text-align: center;
+       }
+   }
+
+   .modal-body-data {display: none;}
+
+   .modal-load-message {
+       margin-top: 10px;
+       text-align: center;
+   }
+}
+
+// "Rows" / Individual items to be populated in the modal
+.modal-item {
+   margin: 10px 0;
+   max-width: 100%;
+   overflow: hidden;
+
+   .vital-content {font-weight: bold;}
+
+   select {
+       width: 140px;
+   }
+
+   p {
+       display: inline-block;
+       margin: 0;
+       padding: 0;
+   }
+
+   a {
+      font-weight: bold;
+   }
+}
+
+// Divides sections in the modal
+.modal-body-border {
+   margin: 10px auto 10px;
+   width: 60%;
+   border-bottom: 1px solid grey;
+}
+
+// Modal buttons
+.modal-button-container {
+   margin-top: 5px;
+
+   .valid-button {
+       color: black;
+       padding: 10px;
+       border-radius: 1em;
+       box-shadow: 1px 1px 5px rgba(0,0,0,.2);
+       border-width: 0;
+       float: left;
+       width: 45%;
+       margin: 2.5%;
+
+       &:hover {
+           background-color: white;
+           color: black;
+       }
+   }
+
+   .greyout-button {
+       background-color: white;
+       color: black;
+       padding: 10px;
+       border-radius: 1em;
+       box-shadow: 1px 1px 5px rgba(0,0,0,.2);
+       border-width: 0;
+       float: left;
+       width: 45%;
+       margin: 2.5%;
+
+       &:hover {
+          cursor: not-allowed;
+
+       }
+   }
+}

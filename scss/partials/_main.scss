@@ -1,0 +1,233 @@
+
+.clear-float-div {
+    clear: both;
+}
+
+html, body
+{
+    margin:0;
+    padding:0;
+    font-family: 'Merriweather', serif;
+}
+
+// Layout for sticky footer
+
+
+
+header {
+    width: 94%;
+    // height: 60px;
+    background-image: linear-gradient(to left, $color-primary-0, $color-primary-2);
+    text-align: center;
+    padding: 20px 0 10px;
+    border-radius: 2em;
+    margin: 20px 3% 0 3%;
+    border: 1px solid;
+}
+
+.title {
+    font-size: 6em;
+    font-weight: bold;
+}
+
+.sub-title {
+    font-size: 2em;
+}
+
+
+.float-left {
+    margin-left: 5%;
+    padding-top: 20px;
+    float:left;
+    width: 45%;
+    // border-right: 1px solid;
+}
+
+
+.float-right {
+    // padding-top: 20px;
+    float: right;
+    width: 45%;
+    margin-right: 5%;
+    text-align: center;
+}
+
+.post-content-container {
+    margin: 0 auto;
+    width: 400px;
+    // box-shadow: 1px 1px 10px rgba(0, 128, 0,.2);
+    border-radius: 2em;
+    border-style: solid;
+
+    background-color: white;
+}
+
+.post-title-container {
+    margin: 0 auto;
+    padding: 25px 0;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+
+.post-body-container {
+    padding: 0 30px;
+    text-align: center;
+}
+
+// User-input Container
+.user-input {
+	margin: 10px 0;
+
+    input {
+        width: 279.5px;
+        border-width: 2px;
+        padding: 1px 0;
+    }
+
+    select {
+        width: 283.5px;
+    }
+
+    #user-input-receiver {
+        display: none;
+    }
+}
+
+
+
+.post-info-title-container {
+	padding: 0;
+}
+
+// Row for user input and tool tip image
+.post-input-row {
+    position: relative;
+}
+
+// Contains img and tool tip
+.tooltiptext-container {
+
+    img {
+        margin-bottom: -7px;
+        margin-right: -10px;
+    }
+
+
+
+	.tooltiptext {
+		@include tooltiptext;
+		top: -5px;
+		left: 97%;
+
+	}
+
+	&:hover .tooltiptext {
+		visibility: visible;
+		z-index: 2;
+	}
+}
+
+#review-button {
+    margin: 15px;
+}
+
+
+
+
+
+
+footer {
+    clear: both;
+    // margin-top: -130px;
+    text-align: center;
+    // background-color: white;
+}
+
+.footer-icon {
+    padding: 20px;
+}
+
+@media screen and (max-width: 1300px) { /* Media querry: media type: screen, screen min-width: XXXpx
+This means the screen with change no screens ovey the min-width.
+For more information see: https://www.w3schools.com/cssref/css3_pr_mediaquery.asp */
+
+	/**********
+	TWO COLUMN LAYOUT (used in contact.html)
+	**********/
+    .float-left {
+        float:none;
+        margin: 0 auto;
+        padding-top: 20px;
+        width: 100%;
+    }
+
+    .post-content-container {
+        margin: 0 auto;
+        box-shadow: 1px 1px 10px rgba(0, 128, 0,.2);
+        border-radius: 2em;
+        background-color: white;
+    }
+
+
+
+    .float-right {
+        float:none;
+        margin: 0 auto;
+        padding-top: 20px;
+        width: 100%;
+
+    }
+
+    #search-container {
+        // max-width: 500px;
+        max-width: 600px;
+        min-width: 400px;
+        margin: 20px auto 80px;;
+    }
+
+    #filter-container {
+        width: 100%;
+    }
+
+    // Contains img and tool tip
+    .tooltiptext-container {
+
+        img {
+            margin-bottom: -7px;
+            margin-right: -10px;
+        }
+
+
+
+    	.tooltiptext {
+    		@include tooltiptext;
+            white-space: normal;
+            min-width: 200px;
+    		top: -5px;
+    		left: 97%;
+
+    	}
+
+    	&:hover .tooltiptext {
+    		visibility: visible;
+    		z-index: 2;
+    	}
+    }
+}
+
+.thank-you-container {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.thank-you-container h1 {
+    margin: 0;
+    padding: 65px 0 20px;
+}
+
+.thank-you-links-container {
+    font-size: 1.5em;
+    padding: 10px;
+}

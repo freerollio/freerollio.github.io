@@ -1,0 +1,107 @@
+.mobile-overlay {
+    position: absolute;
+    z-index: 3;
+    background: white;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: none;
+}
+
+.mobile-message {
+    display: none;
+}
+
+@media screen and (max-width: 420px) {
+    .mobile-overlay {
+        display: block;
+    }
+
+    .content {
+        display: none;
+    }
+
+    .mobile-message {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        color: black;
+        font-size: 18px;
+        display: block;
+        text-align: center;
+        z-index: 3;
+    }
+}
+
+
+
+
+// Overlay
+.overlay {
+    position: absolute;
+    z-index: 2;
+    background: $overlay-color;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: none;
+}
+
+body.error .overlay { // Display upon error thrown
+    display: block;
+}
+
+// Creating container for body error message
+ body.error div.error-bar {
+    width: 420px;
+    padding: 40px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      /* bring your own prefixes */
+      transform: translate(-50%, -50%);
+
+    background-color: $buttton-background-one;
+    color: #ffffff;
+    font-size: 18px;
+    display: block !important;
+    text-align: center;
+
+
+
+    border-radius: 2em;
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
+    z-index: 2;
+    & a {
+        color: $a-tag-color;
+    }
+}
+
+/* The Close Button */
+.close-error-x {
+   color: #aaa;
+   float: right;
+   font-size: 28px;
+   font-weight: bold;
+   margin-top: -30px;
+
+   &:hover, &:focus {
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+   }
+}
+
+// Set all displays: none
+span.error-label.invalid-network{ display:none}
+span.error-label.no-metamask-accounts { display:none}
+span.error-label.no-metamask-plugin { display: none}
+
+// Except when the body is has its error class
+body.error-invalid-network div.error-bar span.error-label.invalid-network{ display:inline !important}
+body.error-no-metamask-accounts div.error-bar span.error-label.no-metamask-accounts { display:inline !important}
+body.error-no-metamask-plugin div.error-bar span.error-label.no-metamask-plugin { display:inline !important}
