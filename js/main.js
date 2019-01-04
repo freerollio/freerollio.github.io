@@ -309,10 +309,10 @@ function displayLogs(_logs_to_display) {
             }).appendTo('#' + unique_id + '_title_row');
             if (logs_to_display_now[i][0].args['_location'] == "") { // No location
                 $('#' + unique_id + '_title_row' + ' #location-span').append(
-                    '<img src="/freerollio/images/www_grey_24px.png" />'); // black coin
+                    '<img src="/images/www_grey_24px.png" />'); // black coin
             } else { // Location
                 $('#' + unique_id + '_title_row' + ' #location-span').append(
-                    '<img src="/freerollio/images/www_black_24px.png" />'); // gold coin
+                    '<img src="/images/www_black_24px.png" />'); // gold coin
             }
 
             // #freeroll-value-span
@@ -322,10 +322,10 @@ function displayLogs(_logs_to_display) {
             }).appendTo('#' + unique_id + '_title_row');
             if (web3.fromWei(logs_to_display_now[i][0].args['_value'], 'ether') < .5) { // < 0.5 ETH
                 $('#' + unique_id + '_title_row' + ' #freeroll-value-span').append(
-                    '<img src="/freerollio/images/black_coin_24px.png" />'); // black coin
+                    '<img src="/images/black_coin_24px.png" />'); // black coin
             } else { // > 0.5 ETH
                 $('#' + unique_id + '_title_row' + ' #freeroll-value-span').append(
-                    '<img src="/freerollio/images/coin_gold_24px.png" />'); // gold coin
+                    '<img src="/images/coin_gold_24px.png" />'); // gold coin
             }
 
             // #charity-span
@@ -335,10 +335,10 @@ function displayLogs(_logs_to_display) {
             }).appendTo('#' + unique_id + '_title_row');
             if (logs_to_display_now[i][0].args['_charity']) { // charity (bool)
                 $('#' + unique_id + '_title_row' + ' #charity-span').append( // Dark image
-                    '<img id="moneybag-img" src="/freerollio/images/charityhand_dark_24px.png" />');
+                    '<img id="moneybag-img" src="/images/charityhand_dark_24px.png" />');
             } else { // no charity (bool)
                 $('#' + unique_id + '_title_row' + ' #charity-span').append( // Light image
-                    '<img id="moneybag-img" src="/freerollio/images/charityhand_light_24px.png" />');
+                    '<img id="moneybag-img" src="/images/charityhand_light_24px.png" />');
             }
 
             // #category-span
@@ -348,22 +348,22 @@ function displayLogs(_logs_to_display) {
             }).appendTo('#' + unique_id + '_title_row');
             if (logs_to_display_now[i][0].args['_category'] == 0) { // Health
                 $('#' + unique_id + '_title_row' + ' #category-span').append(
-                    '<img id="moneybag-img" src="/freerollio/images/runner_24px.png" />');
+                    '<img id="moneybag-img" src="/images/runner_24px.png" />');
             }
 
             else if (logs_to_display_now[i][0].args['_category'] == 1) { // Skill
                 $('#' + unique_id + '_title_row' + ' #category-span').append(
-                    '<img id="moneybag-img" src="/freerollio/images/music_24px.png" />');
+                    '<img id="moneybag-img" src="/images/music_24px.png" />');
             }
 
             else if (logs_to_display_now[i][0].args['_category'] == 2) { // School/work
                 $('#' + unique_id + '_title_row' + ' #category-span').append(
-                    '<img id="moneybag-img" src="/freerollio/images/book24px.png" />');
+                    '<img id="moneybag-img" src="/images/book24px.png" />');
             }
 
             else if (logs_to_display_now[i][0].args['_category'] == 3) { // Other
                 $('#' + unique_id + '_title_row' + ' #category-span').append(
-                    '<img id="moneybag-img" src="/freerollio/images/new_24px.png" />');
+                    '<img id="moneybag-img" src="/images/new_24px.png" />');
             }
 
             logs_displayed += 1; // Increment number_shown
