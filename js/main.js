@@ -32,7 +32,7 @@ var web3_location = null;
 var web3_category = null;
 
 var deploy_gas = null;
-const claim_gas = 48200;
+const claim_gas = 70000;
 
 // *** Blockchain search and Display Logic *************************************************************************************************************
 // *** Gets block and starts search (called after web3 checks)
@@ -584,7 +584,7 @@ function payoutFreeroll() {
     web3.eth.sendTransaction({ // Send transaction
         from: web3.eth.defaultAccount,
         to: freerollInstance.address,
-        gas: 40000,
+        gas: claim_gas,
         data: payout_data}, function(err, txHash) {
 
             if (!err) {
@@ -618,7 +618,7 @@ function claimVictory() {
     web3.eth.sendTransaction({ // Send transaction
         from: web3.eth.defaultAccount,
         to: freerollInstance.address,
-        gas: 40000,
+        gas: claim_gas,
         data: payout_data}, function(err, txHash) {
 
             if (!err) {
