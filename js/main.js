@@ -1016,8 +1016,8 @@ function submitFreeroll() {
     // Modal loading message show
     $("#submitting-load-message").show();
 
-    // Hide review information container
-    $("#blockchain-review-information").hide();
+    // // Hide review information container
+    // $("#blockchain-review-information").hide();
 
 
     web3.eth.sendTransaction({
