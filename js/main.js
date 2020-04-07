@@ -20,7 +20,7 @@ var timestamp_counter = 0;
 const charity_list = ['0xc7464dbcA260A8faF033460622B23467Df5AEA42', '0xD3F81260a44A1df7A7269CF66Abd9c7e4f8CdcD1', '0x631bE4762a3d5c2fe2D9166e530F74AdDFCb1567']; // [GiveDirectly, Heifer International, My address]
 const charity_url_list = ['https://givedirectly.org/give-now?crypto=eth', 'https://www.heifer.org/what-you-can-do/give/digital-currency.html', 'https://etherscan.io/address/0x631bE4762a3d5c2fe2D9166e530F74AdDFCb1567']
 // Modal variables
-const proxy_url = 'https://cors-anywhere.herokuapp.com/';
+// const proxy_url = 'https://cors-anywhere.herokuapp.com/';
 var ethPrice = null;
 var gasInfo = null;
 var web3_description = null;
@@ -865,119 +865,119 @@ function getEthPrice() {
 }
 
 
-// *** API call to ethgasstation to get gas prices and times
-// Stores globally and calls populate estimates
-function getGasPrice() {
-    // Gas prices
-    fetch(proxy_url + 'https://ethgasstation.info/json/ethgasAPI.json')
-    .then((resp) => resp.json())  // Turn into json data
-    .then(function(data){
-        gasInfo = data;
-        console.log('gas price api - check');
-        getGasLimit();
-    })
-    .catch(function(error){
-        console.log(error);
-    });
-}
-
-function getGasLimit() {
-
-    // Transaction data
-    var create_freeroll_tx_data = factoryInstance.newFreeroll.getData(
-        web3_description,
-        web3_receiver,
-        web3_charity_bool,
-        web3_category,
-        web3_duration_sec,
-        web3_location);
-
-     web3.eth.estimateGas({
-         from: web3.eth.defaultAccount,
-         to: factoryInstance.address,
-         value: web3_amount_wei,
-         data: create_freeroll_tx_data}, function(err, create_estimate) {
-
-             if (!err) {
-
-                 deploy_gas = create_estimate;
-
-                 console.log('gas limit estimate- check');
-
-                 populateEstimates();
-
-             }
-
-             else {
-                 console.error(err);
-
-                 // Somehow inform user and close modal;
-             }
-         }
-    );
-}
-
-
-// *** Appends the APIs to the modal
-// End of review modal sequence
-function populateEstimates() {
-
-    var user_gas_choice = $("#gas-price").find(':selected').val(); // Get user gas choice
-
-    // Display costs and times based upon his choice and blockchain data
-    if (user_gas_choice == 'standard') {
-
-        // Set estimated deadline
-        var est_review_deadline = new Date((gasInfo.avgWait * gasInfo.block_time * 1000) + (web3_duration_sec * 1000) + Date.now());
-        $("#modal-est-deadline-date").text(est_review_deadline.toDateString());
-        $("#modal-est-deadline-time").text(est_review_deadline.toLocaleTimeString());
-
-        // Set estimated deploy cost
-        var freeroll_deploy_estimate = deploy_gas * (gasInfo.average / 10) * 0.000000001 * ethPrice;
-        $("#modal-deploy-cost").text(freeroll_deploy_estimate.toFixed(2) + ' usd');
-
-        // Set estimated victory cost
-        var freeroll_call_estimate = claim_gas * (gasInfo.average / 10) * 0.000000001 * ethPrice;
-        $("#modal-claim-cost").text(freeroll_call_estimate.toFixed(2) + ' usd');
-    }
-
-    else if (user_gas_choice == 'low') {
-
-        // Set estimated deadline
-        var est_review_deadline = new Date((gasInfo.safeLowWait * gasInfo.block_time * 1000) + (web3_duration_sec * 1000) + Date.now());
-        $("#modal-est-deadline-date").text(est_review_deadline.toDateString());
-        $("#modal-est-deadline-time").text(est_review_deadline.toLocaleTimeString());
-
-        // Set estimated deploy cost
-        var freeroll_deploy_estimate = deploy_gas * (gasInfo.safeLow / 10) * 0.000000001 * ethPrice;
-        $("#modal-deploy-cost").text(freeroll_deploy_estimate.toFixed(2) + ' usd');
-
-        // Set estimated victory cost
-        var freeroll_call_estimate = claim_gas * (gasInfo.safeLow / 10) * 0.000000001 * ethPrice;
-        $("#modal-claim-cost").text(freeroll_call_estimate.toFixed(2) + ' usd');
-    }
-
-    else {
-
-        // Set estimated deadline
-        var est_review_deadline = new Date((gasInfo.fastWait * gasInfo.block_time * 1000) + (web3_duration_sec * 1000) + Date.now());
-
-        $("#modal-est-deadline-date").text(est_review_deadline.toDateString());
-        $("#modal-est-deadline-time").text(est_review_deadline.toLocaleTimeString());
-
-        // Set estimated deploy cost
-        var freeroll_deploy_estimate = deploy_gas * (gasInfo.fast / 10) * 0.000000001 * ethPrice;
-        $("#modal-deploy-cost").text(freeroll_deploy_estimate.toFixed(2) + ' usd');
-
-        // Set estimated victory cost
-        var freeroll_call_estimate = claim_gas * (gasInfo.fast / 10) * 0.000000001 * ethPrice;
-        $("#modal-claim-cost").text(freeroll_call_estimate.toFixed(2) + ' usd');
-    }
-
-
-    $("#review-load-message").hide();
-    $("#blockchain-review-information").show();
-}
+// // *** API call to ethgasstation to get gas prices and times
+// // Stores globally and calls populate estimates
+// function getGasPrice() {
+//     // Gas prices
+//     fetch(proxy_url + 'https://ethgasstation.info/json/ethgasAPI.json')
+//     .then((resp) => resp.json())  // Turn into json data
+//     .then(function(data){
+//         gasInfo = data;
+//         console.log('gas price api - check');
+//         getGasLimit();
+//     })
+//     .catch(function(error){
+//         console.log(error);
+//     });
+// }
+//
+// function getGasLimit() {
+//
+//     // Transaction data
+//     var create_freeroll_tx_data = factoryInstance.newFreeroll.getData(
+//         web3_description,
+//         web3_receiver,
+//         web3_charity_bool,
+//         web3_category,
+//         web3_duration_sec,
+//         web3_location);
+//
+//      web3.eth.estimateGas({
+//          from: web3.eth.defaultAccount,
+//          to: factoryInstance.address,
+//          value: web3_amount_wei,
+//          data: create_freeroll_tx_data}, function(err, create_estimate) {
+//
+//              if (!err) {
+//
+//                  deploy_gas = create_estimate;
+//
+//                  console.log('gas limit estimate- check');
+//
+//                  populateEstimates();
+//
+//              }
+//
+//              else {
+//                  console.error(err);
+//
+//                  // Somehow inform user and close modal;
+//              }
+//          }
+//     );
+// }
+//
+//
+// // *** Appends the APIs to the modal
+// // End of review modal sequence
+// function populateEstimates() {
+//
+//     var user_gas_choice = $("#gas-price").find(':selected').val(); // Get user gas choice
+//
+//     // Display costs and times based upon his choice and blockchain data
+//     if (user_gas_choice == 'standard') {
+//
+//         // Set estimated deadline
+//         var est_review_deadline = new Date((gasInfo.avgWait * gasInfo.block_time * 1000) + (web3_duration_sec * 1000) + Date.now());
+//         $("#modal-est-deadline-date").text(est_review_deadline.toDateString());
+//         $("#modal-est-deadline-time").text(est_review_deadline.toLocaleTimeString());
+//
+//         // Set estimated deploy cost
+//         var freeroll_deploy_estimate = deploy_gas * (gasInfo.average / 10) * 0.000000001 * ethPrice;
+//         $("#modal-deploy-cost").text(freeroll_deploy_estimate.toFixed(2) + ' usd');
+//
+//         // Set estimated victory cost
+//         var freeroll_call_estimate = claim_gas * (gasInfo.average / 10) * 0.000000001 * ethPrice;
+//         $("#modal-claim-cost").text(freeroll_call_estimate.toFixed(2) + ' usd');
+//     }
+//
+//     else if (user_gas_choice == 'low') {
+//
+//         // Set estimated deadline
+//         var est_review_deadline = new Date((gasInfo.safeLowWait * gasInfo.block_time * 1000) + (web3_duration_sec * 1000) + Date.now());
+//         $("#modal-est-deadline-date").text(est_review_deadline.toDateString());
+//         $("#modal-est-deadline-time").text(est_review_deadline.toLocaleTimeString());
+//
+//         // Set estimated deploy cost
+//         var freeroll_deploy_estimate = deploy_gas * (gasInfo.safeLow / 10) * 0.000000001 * ethPrice;
+//         $("#modal-deploy-cost").text(freeroll_deploy_estimate.toFixed(2) + ' usd');
+//
+//         // Set estimated victory cost
+//         var freeroll_call_estimate = claim_gas * (gasInfo.safeLow / 10) * 0.000000001 * ethPrice;
+//         $("#modal-claim-cost").text(freeroll_call_estimate.toFixed(2) + ' usd');
+//     }
+//
+//     else {
+//
+//         // Set estimated deadline
+//         var est_review_deadline = new Date((gasInfo.fastWait * gasInfo.block_time * 1000) + (web3_duration_sec * 1000) + Date.now());
+//
+//         $("#modal-est-deadline-date").text(est_review_deadline.toDateString());
+//         $("#modal-est-deadline-time").text(est_review_deadline.toLocaleTimeString());
+//
+//         // Set estimated deploy cost
+//         var freeroll_deploy_estimate = deploy_gas * (gasInfo.fast / 10) * 0.000000001 * ethPrice;
+//         $("#modal-deploy-cost").text(freeroll_deploy_estimate.toFixed(2) + ' usd');
+//
+//         // Set estimated victory cost
+//         var freeroll_call_estimate = claim_gas * (gasInfo.fast / 10) * 0.000000001 * ethPrice;
+//         $("#modal-claim-cost").text(freeroll_call_estimate.toFixed(2) + ' usd');
+//     }
+//
+//
+//     $("#review-load-message").hide();
+//     $("#blockchain-review-information").show();
+// }
 
 
 // *** Forms and submits the web3 transaction
@@ -985,22 +985,22 @@ function populateEstimates() {
 // Clears post freeroll inputs
 function submitFreeroll() {
 
-    // Gas price level
-    if ($("#gas-price").find(':selected').val() == 'standard') {
-        var web3_gas_price = (gasInfo.average / 10) * 1000000000;
-    }
-    else if ($("#gas-price").find(':selected').val() == 'low') {
-        var web3_gas_price = (gasInfo.safeLow / 10) * 1000000000;
-    }
-    else if ($("#gas-price").find(':selected').val() == 'fast') {
-        var web3_gas_price = (gasInfo.fast / 10) * 1000000000;
-    }
-    else {
-        alert('Sorry something has gone wrong while submitting your transaction (gas prices)');
-        return
-    }
-
-    console.log();
+    // // Gas price level
+    // if ($("#gas-price").find(':selected').val() == 'standard') {
+    //     var web3_gas_price = (gasInfo.average / 10) * 1000000000;
+    // }
+    // else if ($("#gas-price").find(':selected').val() == 'low') {
+    //     var web3_gas_price = (gasInfo.safeLow / 10) * 1000000000;
+    // }
+    // else if ($("#gas-price").find(':selected').val() == 'fast') {
+    //     var web3_gas_price = (gasInfo.fast / 10) * 1000000000;
+    // }
+    // else {
+    //     alert('Sorry something has gone wrong while submitting your transaction (gas prices)');
+    //     return
+    // }
+    //
+    // console.log();
 
     // Transaction data
     var freeroll_tx_data = factoryInstance.newFreeroll.getData(
@@ -1025,7 +1025,7 @@ function submitFreeroll() {
         to: factoryInstance.address,
         value: web3_amount_wei,
         gas: 350000, // mm says 460000 (this the the gas limit), but only deploy_gas amount is used 326882 was used by a large title and url
-        gasPrice: web3_gas_price,
+        // gasPrice: web3_gas_price,
         data: freeroll_tx_data}, function(err, txHash) {
 
             if (!err) {
